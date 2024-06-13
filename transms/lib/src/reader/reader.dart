@@ -15,8 +15,7 @@ class MessageReader {
 
   Future<List<SmsMessage>> getAllSms () async {
     try {
-      SmsQuery query = SmsQuery();
-      final messages = await query.getAllSms;
+      final messages = await _query.getAllSms;
       return messages;
     } catch (e, st) {
       _logger.logError(e, st);
