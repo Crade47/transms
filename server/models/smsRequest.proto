@@ -18,3 +18,7 @@ message SmsMessage {
 message SmsRequest {
 	repeated SmsMessage messages = 1;
 }
+
+service Transms {
+	rpc FilterSenders(SmsMessage) returns (stream SmsMessage) {}
+}
