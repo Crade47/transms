@@ -18,6 +18,6 @@ func main() {
 	var opts []grpc.ServerOption
 	server := grpc.NewServer(opts...)
 	pb.RegisterTransmsServer(server, pb.NewTSServer())
-	fmt.Printf("Listening on port %d\n...", port)
+	fmt.Printf("Listening on port %d...\n", port)
 	server.Serve(listener)
 }
