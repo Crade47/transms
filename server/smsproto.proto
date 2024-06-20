@@ -1,9 +1,9 @@
 syntax = "proto3";
-package transms;
+package smsproto;
 
 
-// option go_package = "github.com/Crade47/transms";
-option go_package = ".";
+option go_package = "github.com/Crade47/transms/smsproto";
+// option go_package = ".";
 
 
 message SmsMessage {
@@ -20,5 +20,5 @@ message SmsRequest {
 }
 
 service Transms {
-	rpc FilterSenders(SmsMessage) returns (stream SmsMessage) {}
+	rpc FilterSenders(SmsRequest) returns (stream SmsMessage) {}
 }
