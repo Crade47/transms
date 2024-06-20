@@ -1,0 +1,24 @@
+syntax = "proto3";
+package smsproto;
+
+
+option go_package = "github.com/Crade47/transms/smsproto";
+// option go_package = ".";
+
+
+message SmsMessage {
+	int64 id = 1;
+	int64 threadId = 2;
+	string address = 3;
+	string body = 4;
+	bool read = 5;
+	string last_updated = 6; 
+}
+
+message SmsRequest {
+	repeated SmsMessage messages = 1;
+}
+
+service Transms {
+	rpc FilterSenders(SmsRequest) returns (stream SmsMessage) {}
+}

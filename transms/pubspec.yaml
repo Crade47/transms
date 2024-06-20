@@ -17,6 +17,7 @@ dependencies:
   riverpod_annotation: ^2.3.5
   # sms_advanced: ^1.1.0
   flutter_sms_inbox: ^1.0.3
+  grpc: ^3.2.4
 
 dev_dependencies:
   flutter_test:
