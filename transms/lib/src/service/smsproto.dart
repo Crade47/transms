@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:transms/src/generated/smsproto.pb.dart';
 import 'package:transms/src/generated/smsproto.pbgrpc.dart';
@@ -9,13 +11,20 @@ class SmsProto {
     _stub = ClientStub().stub;
   }
 
-  Stream<SmsMessage> filterTransactionSms(List<SmsMessage> messages) async* {
+  Stream<SmsMessage> filterTransactionSms(List<SmsMessage> messages) {
     final request = SmsRequest(
       messages: messages
     );
-    await for(var message in _stub.filterSenders(request)){
-      debugPrint(message.address);
-      yield message;
-    }
+    final controller = StreamController<SmsMessage>.broadcast();
+
+
+    () async{
+      await for(var message in _stub.filterSenders(request)){
+        debugPrint(message.toDebugString());
+        controller.add(message);
+      }
+      await controller.close();
+    }();
+    return controller.stream;
   } 
 }
