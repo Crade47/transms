@@ -10,6 +10,7 @@ import (
 
 func main() {
 	port := 7890
+	//listen on port
 	listener, err := net.Listen("tcp", fmt.Sprintf("localhost:%d", port))
 	if err != nil {
 		panic(fmt.Sprintf("Error listening on port, %v", err))
