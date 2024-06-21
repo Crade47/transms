@@ -44,7 +44,7 @@ var circleName = map[string]string{
 	"V": "westbengal",
 }
 
-var bankNameCode = map[int]string{
-	1: "MAHABK",
-	2: "AXISBK",
+var bankNameCode = map[string]int{
+	"MAHABK": 1,
+	"AXISBK": 2,
 }

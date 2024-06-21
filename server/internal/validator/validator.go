@@ -3,7 +3,7 @@ package validator
 import "strings"
 
 func ValidatePrefix(s *string) bool {
-	if len(*s) > 2 || len(*s) < 2 {
+	if len(*s) != 2 {
 		return false
 	}
 
@@ -13,4 +13,13 @@ func ValidatePrefix(s *string) bool {
 	_, validCirclePrefix := circleName[charArr[1]]
 
 	return (validCirclePrefix && validOpPrefix)
+}
+
+func ValidateBankName(s *string) bool {
+	if len(*s) != 6 {
+		return false
+	}
+	_, validBankName := bankNameCode[*s]
+	return validBankName
+
 }
