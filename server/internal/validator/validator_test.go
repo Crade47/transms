@@ -22,7 +22,7 @@ func TestValidatePrefix(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			ans := ValidatePrefix(&tt.input)
+			ans := validatePrefix(&tt.input)
 			if ans != tt.expected {
 				t.Errorf("Expected: %v Got: %v ", tt.expected, ans)
 			}
@@ -44,7 +44,30 @@ func TestValidateBankName(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			ans := ValidateBankName(&tt.input)
+			ans := validateBankName(&tt.input)
+			if ans != tt.expected {
+				t.Errorf("Expected: %v Got: %v ", tt.expected, ans)
+			}
+		})
+	}
+}
+
+func TestValidSenderId(t *testing.T) {
+	tests := []struct {
+		name     string
+		input    string
+		expected bool
+	}{
+		{"Valid SenderId", "VK-MAHABK", true},
+		{"Invalid SenderId with invalid OP-Prefix", "KV-MAHABK", false},
+		{"Invalid SenderId with invalid Bank Name", "AX-AXIMBK", false},
+		{"Empty input", "", false},
+		{"String size too big", "AX-AXIMBANK", false},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			ans := ValidateSenderId(&tt.input)
 			if ans != tt.expected {
 				t.Errorf("Expected: %v Got: %v ", tt.expected, ans)
 			}

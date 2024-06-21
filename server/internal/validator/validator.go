@@ -1,8 +1,11 @@
 package validator
 
-import "strings"
+import (
+	"runtime"
+	"strings"
+)
 
-func ValidatePrefix(s *string) bool {
+func validatePrefix(s *string) bool {
 	if len(*s) != 2 {
 		return false
 	}
@@ -15,11 +18,36 @@ func ValidatePrefix(s *string) bool {
 	return (validCirclePrefix && validOpPrefix)
 }
 
-func ValidateBankName(s *string) bool {
+func validateBankName(s *string) bool {
 	if len(*s) != 6 {
 		return false
 	}
 	_, validBankName := bankNameCode[*s]
 	return validBankName
 
+}
+
+func ValidateSenderId(s *string) bool {
+
+	if len(*s) != 9 {
+		return false
+	}
+
+	parts := strings.Split(*s, "-")
+
+	runtime.GOMAXPROCS(runtime.NumCPU())
+	vPrefixChan := make(chan bool)
+	vBankNameChan := make(chan bool)
+
+	go func() {
+		vPrefixChan <- validatePrefix(&parts[0])
+	}()
+
+	go func() {
+		vBankNameChan <- validateBankName(&parts[1])
+	}()
+
+	validPrefix := <-vPrefixChan
+	validBankName := <-vBankNameChan
+	return validBankName && validPrefix
 }
