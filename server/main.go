@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net"
 
-	pb "github.com/Crade47/transms/smsproto"
+	"github.com/Crade47/transms/smsproto"
 	"google.golang.org/grpc"
 )
 
@@ -17,7 +17,7 @@ func main() {
 	}
 	var opts []grpc.ServerOption
 	server := grpc.NewServer(opts...)
-	pb.RegisterTransmsServer(server, pb.NewTSServer())
+	smsproto.RegisterTransmsServer(server, smsproto.NewTSServer())
 	fmt.Printf("Listening on port %d...\n", port)
 	server.Serve(listener)
 }
